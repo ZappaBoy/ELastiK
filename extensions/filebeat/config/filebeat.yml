@@ -4,7 +4,9 @@
 
 filebeat.config:
   modules:
-    path: ${path.config}/modules.d/*.yml
+    paths: 
+    - /var/lib/docker/containers/*/*.log 
+    document_type: syslog   
     reload.enabled: false
 
 filebeat.autodiscover:
@@ -17,8 +19,8 @@ filebeat.autodiscover:
 processors:
   - add_cloud_metadata: ~
 
-output.elasticsearch:
-  hosts: ['http://elasticsearch:9200']
+output.logstash:
+  hosts: ['http://elasticsearch:5044']
   username: ${ELASTIC_USERNAME}
   password: ${ELASTIC_PASSWORD}
 
